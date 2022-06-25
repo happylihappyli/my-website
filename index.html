@@ -1,68 +1,1124 @@
+
 <!DOCTYPE html>
-<html lang="en">
-
+<html xmlns="http://www.w3.org/1999/xhtml">
 <head>
-    <meta charset="utf-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="theme-color" content="#000000">
-    <meta name="description" content="Web site created using CloudBase Webify">
-    <title>Hello Webify！</title>
-    <style>
-        body {
-            margin: 0;
-            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-                'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-                sans-serif;
-            -webkit-font-smoothing: antialiased;
-            -moz-osx-font-smoothing: grayscale;
-        }
-        code {
-            font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-                monospace;
-        }
-        .App {
-            text-align: center;
-        }
+<meta http-equiv="Content-Type" content="text/html; charset=utf-8" /><title>
+数学爱好者 mathfan
+</title><meta name="viewport" content="width=device-width; initial-scale=1.0; maximum-scale=1.0; user-scalable=0;" />
+<link href="/Common/win8/style.css" title="style" rel="stylesheet" type="text/css" />
+<link id="clink" href="/Common/win8/css/style-blue.css" title="style" rel="stylesheet" type="text/css" media="screen"/>
+<script src="/Common/jquery/jquery-1.9.0.min.js" type="text/javascript"></script>
+<script src="/Common/win8/scripts/jquery.masonry.min.js" type="text/javascript"></script>
+<script src="/Common/win8/scripts/jquery.easing.1.3.js" type="text/javascript"></script>
+<script src="/Common/win8/scripts/MetroJs.lt.js" type="text/javascript"></script>
+<script src="/Common/win8/scripts/jquery.flexslider-min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/Common/win8/scripts/hoverintent.js" type="text/javascript" charset="utf-8"></script>
+<script src="/Common/win8/scripts/jquery.jplayer.min.js" type="text/javascript" charset="utf-8"></script>
+<script src="/Common/win8/scripts/organictabs.jquery.js" type="text/javascript" charset="utf-8"></script>
 
-        .App-logo {
-            height: 40vmin;
-            pointer-events: none;
-        }
+<script src="/Common/win8/scripts/mediaplayer.js" type="text/javascript"></script>
+<script src="/Common/layer/layer.js" type="text/javascript"></script>
+<script src="/funnyai/funnyai_script.js" type="text/javascript"></script>
+<style type="text/css">
+::-webkit-input-placeholder { /* WebKit browsers */
+color: #99000; 
+}
+.SiteLink {
+color:black;font-size:22px;
+}
+.layui-layer-demo {
+    background-color: #eee;
+    font-size:32px;
+}
+.layui-layer-demo .layui-layer-title {
+    border: none;
+    background-color: #333;
+    color: #fff;
+}
+#nav a {
+    color: #00aaff;
+}
+</style>
+<script type="text/javascript">
+function search_tag(){
+var strKey=$("#key").val();
+window.open("http://www.funnyai.com/note/index.php?key="+encodeURI(strKey));
+}
+function search_baidu(){
+var strKey=$("#key").val();
+window.open("https://www.baidu.com/s?tn=mswin_oem_dg&ie=utf-16&word="+encodeURI(strKey));
+}
+function search_google(){
+var strKey=$("#key").val();
+window.open("https://www.google.co.jp/search?dcr=0&source=hp&q="+encodeURI(strKey));
+}
+function search_bing(){
+var strKey=$("#key").val();
+window.open("https://www.bing.com/search?q="+encodeURI(strKey));
+}
+function Send_Msg(id,msg){
+    	   sendText(msg);
+        $.ajax({
+          type: "GET",
+          url: "/funnyai/fs_ai_reply.php",
+          data: { key: msg,id:id ,web:1}
+        })
+        .success(function( msg ) {
+var pattern = /:url:(.*)(\r){0,1}\n(.*)/gi;
+var replacement='<a href="$3" target=_blank>$1</a>';
+msg=msg.replace(pattern, replacement);
 
-        @media (prefers-reduced-motion: no-preference) {
-            .App-logo {
-                animation: App-logo-spin infinite 20s linear;
-            }
-        }
+var width=window.innerWidth*0.8;
+var height=window.innerHeight*0.6;
+layer.open({
+  type: 1,
+  skin: 'layui-layer-demo', //样式类名
+  closeBtn: 0, //不显示关闭按钮
+  anim: 2,
+  area: [width+'px', height+'px'],
+  shadeClose: true, //开启遮罩关闭
+  content: msg
+});
+        })
+        .error(function (msg) {
+            alert(msg)
+        });
+}
+function MyAnswer(){
+var Type=$("#Type").val();
+var msg=$("#key").val();
+switch(Type){
+    case "baidu":
+        search_baidu()
+        break;
+    case "tag":
+        search_tag();
+        break;
+   default:
+        Send_Msg(Type,msg);
+        break;
+}
+}
+function MyAI(){
+var Type=$("#Type").val();
+var msg=$("#key").val();
+switch(Type){
+    case "baidu":
+        search_baidu()
+        break;
+    case "tag":
+        search_tag();
+        break;
+   default:
+        window.open("/funnyai/index.php?id="+Type);
+        break;
+}
 
-        .App-header {
-            background-color: #efefef;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            font-size: calc(10px + 2vmin);
-            color: black;
-        }
-
-        .App-link {
-            color: #108ee9;
-        }
-    </style>
-</head>
-
-<body>
-    <div id="root">
-        <div class="App">
-            <header class="App-header">
-                <img src="https://main.qcloudimg.com/raw/2f3b21706c37e8685efe5c60b26ceb24.png" class="App-logo" alt="logo">
-                <p>Welcome to Webify！</p>
-                <a class="App-link" href="https://webify.cloudbase.net/"
-                    target="_blank" rel="noopener noreferrer">webify.cloudbase.net</a>
-            </header>
+}
+$(function(){
+    $('#key').bind('keyup',function(event) {  
+        if(event.keyCode==13){  
+            MyAnswer();
+        }  
+    }); 
+    $('#key').focus();
+});
+</script>
+</head><body style="margin:0px">
+<div id="bodypat">
+<section id="container">
+<header class="clearfix"  
+style="margin-top: 0px;margin-bottom: 0px;background-color:rgb(241, 241, 241);">
+<a id="headerlink" href="#" title="home">
+<img src="http://www.mathfan.com/images/logo.jpg" alt="logo"/>
+</a>
+<nav>
+<ul id="nav" class="clearfix">
+    <li class="current"><a href="/"><span>首页</span></a></li>
+   <li><a href="old.html" target=_blank><span>原首页</span></a>
+   <li><a href="http://ask.mathfan.com/" target=_blank><span>问答</span></a>
+    <li><a href="http://ask.mathfan.com/wiki/index.php" target=_blank><span>wiki</span></a></li>
+    <li><a href="/URL/Wiki_Home.html" target=_blank><span>词条</span></a></li>
+    </li>
+    <li>
+    	<a href="http://www.funnyai.com/note/ide_url.php?id=-1"  target=_blank><span>便条</span></a>
+    </li>
+    <li><a href="http://www.funnyai.com/note/note_table.php?id=150" target=_blank><span>E</span></a></li>
+    <li><a href="/msg/list_msg.php"  target=_blank id="MsgBox"><span>消息</span></a></li>
+</ul>
+</nav>
+</header>
+<br>
+<div id="loader"></div>
+<section id="mainpage-mos">
+<section id="content-mos" class="centered clearfix">
+<a href="#article-10977" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://blockly.games/?lang=zh-hans' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3037" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3037"/>
+        </div>
+        <span class="tile-cat red">编程小游戏</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10977" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://blockly.games/?lang=zh-hans" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3037"/>
+</a>
+        </li>
+    	<li>
+<a href="https://blockly.games/?lang=zh-hans" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3037"/>
+</a>
+        </li>
+        </ul>
         </div>
     </div>
-</body>
+    <h1 class="lb-title">
+         <a href="https://blockly.games/?lang=zh-hans" target=_blank>编程小游戏</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>编程小游戏</p>
+        <p><a class="exp-button" href="https://blockly.games/?lang=zh-hans"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10974" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.novelgames.com/zh/fourcolour/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3034" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3034"/>
+        </div>
+        <span class="tile-cat red">四色地图</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10974" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.novelgames.com/zh/fourcolour/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3034"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.novelgames.com/zh/fourcolour/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3034"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.novelgames.com/zh/fourcolour/" target=_blank>四色地图</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>四色地图</p>
+        <p><a class="exp-button" href="https://www.novelgames.com/zh/fourcolour/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-13667" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://www.treningmozga.com/en/matchstick/matchstick-puzzles-1.php' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3099" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3099"/>
+        </div>
+        <span class="tile-cat red">火柴棒游戏</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-13667" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://www.treningmozga.com/en/matchstick/matchstick-puzzles-1.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3099"/>
+</a>
+        </li>
+    	<li>
+<a href="http://www.treningmozga.com/en/matchstick/matchstick-puzzles-1.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3099"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://www.treningmozga.com/en/matchstick/matchstick-puzzles-1.php" target=_blank>火柴棒游戏</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>火柴棒游戏</p>
+        <p><a class="exp-button" href="http://www.treningmozga.com/en/matchstick/matchstick-puzzles-1.php"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10969" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.novelgames.com/zh/mousetrap/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3029" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3029"/>
+        </div>
+        <span class="tile-cat red">围住老鼠</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10969" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.novelgames.com/zh/mousetrap/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3029"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.novelgames.com/zh/mousetrap/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3029"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.novelgames.com/zh/mousetrap/" target=_blank>围住老鼠</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>围住老鼠</p>
+        <p><a class="exp-button" href="https://www.novelgames.com/zh/mousetrap/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10983" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://aj-r.github.io/2048-AI/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3033" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3033"/>
+        </div>
+        <span class="tile-cat red">2048 AI</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10983" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://aj-r.github.io/2048-AI/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3033"/>
+</a>
+        </li>
+    	<li>
+<a href="https://aj-r.github.io/2048-AI/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3033"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://aj-r.github.io/2048-AI/" target=_blank>2048 AI</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>2048 AI</p>
+        <p><a class="exp-button" href="https://aj-r.github.io/2048-AI/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10973" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://play2048.co/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3033" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3033"/>
+        </div>
+        <span class="tile-cat red">2048</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10973" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://play2048.co/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3033"/>
+</a>
+        </li>
+    	<li>
+<a href="https://play2048.co/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3033"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://play2048.co/" target=_blank>2048</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>2048</p>
+        <p><a class="exp-button" href="https://play2048.co/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10968" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://www.funnyai.com/poker/24.php' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3028" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3028"/>
+        </div>
+        <span class="tile-cat red">24点游戏</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10968" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://www.funnyai.com/poker/24.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3028"/>
+</a>
+        </li>
+    	<li>
+<a href="http://www.funnyai.com/poker/24.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3028"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://www.funnyai.com/poker/24.php" target=_blank>24点游戏</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>24点游戏</p>
+        <p><a class="exp-button" href="http://www.funnyai.com/poker/24.php"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-15033" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://logicbox.jahooma.com/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3310" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3310"/>
+        </div>
+        <span class="tile-cat red">逻辑盒子</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-15033" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://logicbox.jahooma.com/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3310"/>
+</a>
+        </li>
+    	<li>
+<a href="https://logicbox.jahooma.com/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3310"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://logicbox.jahooma.com/" target=_blank>逻辑盒子</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>逻辑盒子</p>
+        <p><a class="exp-button" href="https://logicbox.jahooma.com/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10971" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://www.kevs3d.co.uk/dev/lsystems/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3031" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3031"/>
+        </div>
+        <span class="tile-cat red">L分形系统2</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10971" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://www.kevs3d.co.uk/dev/lsystems/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3031"/>
+</a>
+        </li>
+    	<li>
+<a href="http://www.kevs3d.co.uk/dev/lsystems/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3031"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://www.kevs3d.co.uk/dev/lsystems/" target=_blank>L分形系统2</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>L分形系统2</p>
+        <p><a class="exp-button" href="http://www.kevs3d.co.uk/dev/lsystems/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10975" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.euclidea.xyz/en/game/packs' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3035" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3035"/>
+        </div>
+        <span class="tile-cat red">几何游戏</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10975" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.euclidea.xyz/en/game/packs" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3035"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.euclidea.xyz/en/game/packs" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3035"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.euclidea.xyz/en/game/packs" target=_blank>几何游戏</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>几何游戏</p>
+        <p><a class="exp-button" href="https://www.euclidea.xyz/en/game/packs"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10970" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://www.mathfan.com/fractal/L2.php' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3030" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3030"/>
+        </div>
+        <span class="tile-cat red">L分形系统</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10970" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://www.mathfan.com/fractal/L2.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3030"/>
+</a>
+        </li>
+    	<li>
+<a href="http://www.mathfan.com/fractal/L2.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3030"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://www.mathfan.com/fractal/L2.php" target=_blank>L分形系统</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>L分形系统</p>
+        <p><a class="exp-button" href="http://www.mathfan.com/fractal/L2.php"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-13642" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.coolmathgames.com/0-mini-metro-london' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3098" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3098"/>
+        </div>
+        <span class="tile-cat red">地铁规划</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-13642" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.coolmathgames.com/0-mini-metro-london" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3098"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.coolmathgames.com/0-mini-metro-london" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3098"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.coolmathgames.com/0-mini-metro-london" target=_blank>地铁规划</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>地铁规划</p>
+        <p><a class="exp-button" href="https://www.coolmathgames.com/0-mini-metro-london"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-10972" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://octave-online.net/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3032" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3032"/>
+        </div>
+        <span class="tile-cat red">在线Matlab</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-10972" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://octave-online.net/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3032"/>
+</a>
+        </li>
+    	<li>
+<a href="http://octave-online.net/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3032"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://octave-online.net/" target=_blank>在线Matlab</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>在线Matlab</p>
+        <p><a class="exp-button" href="http://octave-online.net/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-13925" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://quaternions.online/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3214" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3214"/>
+        </div>
+        <span class="tile-cat red">四元数和欧拉角</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-13925" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://quaternions.online/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3214"/>
+</a>
+        </li>
+    	<li>
+<a href="https://quaternions.online/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3214"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://quaternions.online/" target=_blank>四元数和欧拉角</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>四元素和欧拉角</p>
+        <p><a class="exp-button" href="https://quaternions.online/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14195" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.geogebra.org/classic/' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3230" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3230"/>
+        </div>
+        <span class="tile-cat red">2D绘图工具</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14195" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.geogebra.org/classic/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3230"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.geogebra.org/classic/" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3230"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.geogebra.org/classic/" target=_blank>2D绘图工具</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>2D绘图工具</p>
+        <p><a class="exp-button" href="https://www.geogebra.org/classic/"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14309" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.tinkercad.com/dashboard?type=circuits&collection=designs' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3242" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3242"/>
+        </div>
+        <span class="tile-cat red">电路设计</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14309" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.tinkercad.com/dashboard?type=circuits&collection=designs" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3242"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.tinkercad.com/dashboard?type=circuits&collection=designs" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3242"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.tinkercad.com/dashboard?type=circuits&collection=designs" target=_blank>电路设计</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>电路设计</p>
+        <p><a class="exp-button" href="https://www.tinkercad.com/dashboard?type=circuits&collection=designs"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-11420" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://robot6.funnyai.com/drag/301.html' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3084" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3084"/>
+        </div>
+        <span class="tile-cat red">各种计算器</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-11420" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://robot6.funnyai.com/drag/301.html" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3084"/>
+</a>
+        </li>
+    	<li>
+<a href="http://robot6.funnyai.com/drag/301.html" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3084"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://robot6.funnyai.com/drag/301.html" target=_blank>各种计算器</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>计算器</p>
+        <p><a class="exp-button" href="http://robot6.funnyai.com/drag/301.html"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14169" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.geogebra.org/3d' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3229" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3229"/>
+        </div>
+        <span class="tile-cat red">3D绘图工具</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14169" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.geogebra.org/3d" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3229"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.geogebra.org/3d" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3229"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.geogebra.org/3d" target=_blank>3D绘图工具</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>3D绘图工具</p>
+        <p><a class="exp-button" href="https://www.geogebra.org/3d"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14194" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://zizhujy.apphb.com/zh-cn/Plotter' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3231" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3231"/>
+        </div>
+        <span class="tile-cat red">最小二乘</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14194" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://zizhujy.apphb.com/zh-cn/Plotter" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3231"/>
+</a>
+        </li>
+    	<li>
+<a href="http://zizhujy.apphb.com/zh-cn/Plotter" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3231"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://zizhujy.apphb.com/zh-cn/Plotter" target=_blank>最小二乘</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>最小二乘</p>
+        <p><a class="exp-button" href="http://zizhujy.apphb.com/zh-cn/Plotter"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14308" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='https://www.tinkercad.com/dashboard' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3241" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+        </div>
+        <span class="tile-cat red">3D在线设计</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14308" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="https://www.tinkercad.com/dashboard" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+</a>
+        </li>
+    	<li>
+<a href="https://www.tinkercad.com/dashboard" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="https://www.tinkercad.com/dashboard" target=_blank>3D在线设计</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>3D在线设计</p>
+        <p><a class="exp-button" href="https://www.tinkercad.com/dashboard"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14454" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://www.funnyai.com/test/robot_6b.php' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3241" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+        </div>
+        <span class="tile-cat red">6轴拣货机械臂</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14454" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://www.funnyai.com/test/robot_6b.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+</a>
+        </li>
+    	<li>
+<a href="http://www.funnyai.com/test/robot_6b.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://www.funnyai.com/test/robot_6b.php" target=_blank>6轴拣货机械臂</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>6轴拣货机械臂</p>
+        <p><a class="exp-button" href="http://www.funnyai.com/test/robot_6b.php"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div><a href="#article-14453" class="lightbox" rel="section">
+    <div class="tile small" data-stops="0,25%,50%,75%,100%" 
+data-speed="3000" data-delay="0" data-direction="horizontal" data-stack="true">
+        <div class="live-front">
+<a href='http://www.funnyai.com/funnystore/diy_robot_6a.php' target=_blank>
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3241" />
+</a>
+        </div>
+        <div class="live-back">
+        	<img class="live-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+        </div>
+        <span class="tile-cat red">6轴机械臂</span>
+    </div>
+</a>
+	<!-- 预览 -->
+    <div class="tile-pre">
+    <article id="article-14453" class="lb-article">
+    <div class="article-img">
+        <div class="flexslider postslideflexslider postslide">
+        <ul class="slides">
+    	<li>
+<a href="http://www.funnyai.com/funnystore/diy_robot_6a.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+</a>
+        </li>
+    	<li>
+<a href="http://www.funnyai.com/funnystore/diy_robot_6a.php" target=_blank>
+            <img class="tile-pre-img" src="http://www.funnyai.com/upload/url.php?id=3241"/>
+</a>
+        </li>
+        </ul>
+        </div>
+    </div>
+    <h1 class="lb-title">
+         <a href="http://www.funnyai.com/funnystore/diy_robot_6a.php" target=_blank>6轴机械臂</a>
+    </h1>
+    <div class="lb-excerpt">
+        <p>6轴机械臂</p>
+        <p><a class="exp-button" href="http://www.funnyai.com/funnystore/diy_robot_6a.php"
+                 target=_blank>进入 &#8594;</a></p>
+    </div>
+    </article>
+    </div></section>
+<div class="clearfix ajax-pagination">
+<a href="index2.html" class="next"></a>
+</div>
 
+</section>
+
+<div class="toggle-button" 
+style="background-color: #19a2de;height:20px;">
+</div>
+<footer class="clearfix">
+<div id="footer-social">
+<a href="http://www.funnyai.com/index9.php" 
+ style="color:black;font-size:22px;" target=_blank>导航</a>
+|
+|
+<a href="http://www.funnyai.com/" style="color:black;font-size:22px;"
+ target=_blank>FunnyAI</a>
+|
+<a href="http://blog.sina.com.cn/u/1879866453" style="color:black;font-size:22px;"
+ target=_blank>BLOG</a>
+|
+<a href="https://www.sciencedaily.com/" style="color:black;font-size:22px;"
+ target=_blank>每日科学</a>
+
+</div>
+</footer>
+<br>
+<center>
+Copyright © 2006-2018
+Designed by www.funnyai.com
+<A href="https://beian.miit.gov.cn" target="_blank">
+沪ICP备08009295号-13</A><BR>
+</center>
+</section>
+</div>
+</body>
+<script type="text/javascript">
+$(function(){
+    $('#key').focus();	
+    $(".toggle-button").click(function(){
+        $('#key').focus();	
+    });
+});
+</script>
 </html>
